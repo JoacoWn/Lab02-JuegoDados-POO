@@ -28,7 +28,7 @@ public class ResultadosJuegoVista {
         if (nombreGanador != null) {
             System.out.println("¡" + nombreGanador + " ha ganado el juego!");
         } else {
-            System.out.println("¡El juego ha terminado en empate!");
+            System.out.println("¡Ambos jugadores perdieron!");
         }
     }
 }
