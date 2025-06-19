@@ -7,14 +7,36 @@ public class MenuPrincipalVista {
 
     public static void menu() {
         int opcion;
+        boolean salir = false;
         do {
             mostrarOpciones();
             opcion = obtenerOpcion(0);
             if (opcion != -1) {
-                ejecutarOpcion(opcion);
+                if (opcion == 3) {
+                    salir = confirmarSalida();
+                    if (!salir) {
+                        opcion = 0; // Para continuar el bucle
+                    }
+                } else {
+                    ejecutarOpcion(opcion);
+                }
             }
-        } while (opcion != 3);
+        } while (opcion != 3 || !salir);
     }
+
+    private static boolean confirmarSalida() {
+        System.out.println("\n¿Está seguro que desea salir del juego? (S/N): ");
+        String respuesta = sc.nextLine().trim().toUpperCase();
+
+        if (respuesta.equals("S")) {
+            System.out.println("\n¡Gracias por jugar! Hasta luego...");
+            return true;
+        } else {
+            System.out.println("\nContinuando con el juego...");
+            return false;
+        }
+    }
+
 
     public static void mostrarOpciones() {
         System.out.println("\n=============================");
