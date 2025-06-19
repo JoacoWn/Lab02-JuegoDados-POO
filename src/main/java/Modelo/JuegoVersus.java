@@ -44,17 +44,21 @@ public class JuegoVersus {
     }
 
     public boolean juegoTerminado() {
+        // Para modo primer intento, terminar después de la primera ronda
+        if (rondasMaximas == MODO_PRIMER_INTENTO && rondaActual >= 1) {
+            return true;
+        }
+
         int victoriasNecesarias = (rondasMaximas / 2) + 1;
 
-        if (jugador1.getPuntaje() >= victoriasNecesarias || jugador2.getPuntaje() >= victoriasNecesarias) {
+        // Si alguien ya alcanzó las victorias necesarias
+        if (jugador1.getPuntaje() >= victoriasNecesarias ||
+                jugador2.getPuntaje() >= victoriasNecesarias) {
             return true;
         }
-        
-        if (rondasMaximas > MODO_PRIMER_INTENTO && rondaActual >= rondasMaximas) {
-            return true;
-        }
-        
-        if (rondasMaximas == MODO_PRIMER_INTENTO && (jugador1.getPuntaje() > 0 || jugador2.getPuntaje() > 0)) {
+
+        // Si se alcanzó el máximo de rondas
+        if (rondaActual >= rondasMaximas) {
             return true;
         }
 
@@ -66,13 +70,23 @@ public class JuegoVersus {
             return null;
         }
 
+        // Si es primer intento y nadie ganó
+        if (rondasMaximas == MODO_PRIMER_INTENTO &&
+                jugador1.getPuntaje() == 0 && jugador2.getPuntaje() == 0) {
+            return null;
+        }
+
+        // Para los otros modos, si nadie ganó después de todas las rondas
+        if (jugador1.getPuntaje() == 0 && jugador2.getPuntaje() == 0) {
+            return null;
+        }
+
         if (jugador1.getPuntaje() > jugador2.getPuntaje()) {
             return jugador1;
         } else if (jugador2.getPuntaje() > jugador1.getPuntaje()) {
             return jugador2;
-        } else {
-            return null; // Empate
         }
+        return null; // Empate o ambos perdieron
     }
 
     public void reiniciarJuego() {

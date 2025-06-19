@@ -7,6 +7,10 @@ import Controlador.ConsolaJuegoVersus;
 public class MenuPrincipalVista {
     private static final java.util.Scanner sc = new java.util.Scanner(System.in);
 
+    public MenuPrincipalVista() {
+        menu();
+    }
+
     public static void menu() {
         int opcion;
         boolean salir = false;
