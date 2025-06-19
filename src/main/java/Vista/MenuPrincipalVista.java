@@ -1,6 +1,8 @@
 package Vista;
 
 import Modelo.JuegoDados;
+import Controlador.ConsolaJuegoVersus;
+
 
 public class MenuPrincipalVista {
     private static final java.util.Scanner sc = new java.util.Scanner(System.in);
@@ -24,6 +26,24 @@ public class MenuPrincipalVista {
         } while (opcion != 3 || !salir);
     }
 
+    // Métodos nuevos necesarios para JuegoDadosConsola
+    public void mostrarMenuPrincipal() {
+        mostrarOpciones();
+    }
+
+    public int obtenerOpcionMenu() {
+        return obtenerOpcion(0);
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    public boolean preguntarConfirmacionSalida() {
+        return confirmarSalida();
+    }
+
+    // Métodos originales
     private static boolean confirmarSalida() {
         System.out.println("\n¿Está seguro que desea salir del juego? (S/N): ");
         String respuesta = sc.nextLine().trim().toUpperCase();
@@ -37,7 +57,6 @@ public class MenuPrincipalVista {
         }
     }
 
-
     public static void mostrarOpciones() {
         System.out.println("\n=============================");
         System.out.println("            Taller            ");
@@ -46,8 +65,6 @@ public class MenuPrincipalVista {
         System.out.println("    [1] Jugar Dado Individual   ");
         System.out.println("    [2] Jugar Dado Versus   ");
         System.out.println("    [3] Salir       ");
-
-
         System.out.println("============================= ");
         System.out.print("      Opcion: ");
     }
@@ -57,20 +74,31 @@ public class MenuPrincipalVista {
             opcion = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Ingrese un numero valido");
-            return -1; // Devolver un valor inválido para que no ejecute ninguna opción
+            return -1;
         }
         return opcion;
     }
 
+
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
             case 1 -> JugarIndividual();
-            case 2 -> System.out.println("Jugar Dado Versus");
+            case 2 -> JugarVersus();
             case 3 -> System.out.println("Hasta luego...");
             default -> System.out.println("Opción inválida...");
         }
     }
 
+    public static void JugarVersus() {
+        System.out.println("\n=== Juego Versus de Dados ===");
+        System.out.println("Ingrese el nombre del Jugador 1:");
+        String nombreJugador1 = sc.nextLine();
+        System.out.println("Ingrese el nombre del Jugador 2:");
+        String nombreJugador2 = sc.nextLine();
+
+        ConsolaJuegoVersus juegoVersus = new ConsolaJuegoVersus(sc, nombreJugador1, nombreJugador2);
+        juegoVersus.iniciarJuegoVersus();
+    }
 
     public static void JugarIndividual() {
         System.out.println("\n=== Juego Individual de Dados ===");
